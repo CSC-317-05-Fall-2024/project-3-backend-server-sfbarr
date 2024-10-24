@@ -2,11 +2,18 @@
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import restaurantData from './data/restaurants.js';
+import { backendRouter } from './routes/api.js';
 
+import restaurantsModule from './data/restaurants.js';
 
+const { getRestaurant, createRestaurant, getRestaurants, deleteRestaurant } = restaurantsModule;
 
 const app = express();
+
+app.use(express.json()); // middleware for parsing JSONs
+
+app.use('/api', backendRouter); // mount API router
+
 const PORT = process.env.PORT || 3000;
 
 const __filename = fileURLToPath(import.meta.url);
@@ -27,13 +34,41 @@ app.get('/attractions', (req, res) => {
 
 
 app.get('/restaurants', (req, res) => {
-    res.render('restaurants', { restaurantData });
+    const restaurants = getRestaurants();
+    
+    res.render('restaurants', { restaurantData: restaurants });
+});
+app.get('/restaurants/:id', (req, res) => {
+    
+    var restaurant = getRestaurant(parseInt(req.params.id, 10));
+    res.render('restaurant-details', {restaurant});
 });
 
-app.get('/newRestaurant', (req, res) => {
-    res.render('newRestaurant');
+app.get('/new-restaurant-form', (req, res) => {
+    
+    res.sendFile(path.join(__dirname, 'public', 'new-restaurant-form.html'));
 });
+
+
+// Updating stuff experimentation
+app.post('/new-restaurant-form', (req, res) => {
+    const { name, phone, address, photo } = req.body;
+  
+    const newRestaurant = {
+      // Generate a simple unique id
+      name,
+      phone,
+      address,
+      photo
+    };
+  
+    restaurantData.push(newRestaurant);
+  
+    res.redirect('/restaurants');
+  });
+
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
+
