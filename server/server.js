@@ -10,7 +10,7 @@ const { getRestaurant, createRestaurant, getRestaurants, deleteRestaurant } = re
 
 const app = express();
 
-app.use(express.json()); // middleware for parsing JSONs
+// app.use(express.json()); // middleware for parsing JSONs
 
 app.use('/api', backendRouter); // mount API router
 
@@ -31,7 +31,9 @@ app.get('/', (req, res) => {
 app.get('/attractions', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'KyotoAttractions.html'));
 });
-
+app.delete('/restaurants/:id', (req, res) => {
+    console.log(`Delete from server.js`);
+});
 
 app.get('/restaurants', (req, res) => {
     const restaurants = getRestaurants();

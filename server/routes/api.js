@@ -38,34 +38,4 @@ router.delete('/restaurants/:id', (req, res) => {
     console.log("Router DELETE request \n\n");
 });
 
-// router.get('/restaurants', (req, res) => {
-//     const restaurants = getRestaurants();
-//     res.json(restaurants); // Send the list of restaurants as JSON
-// });
-
-// router.get('/restaurants/:id', (req, res) => {
-//     const id = parseInt(req.params.id);
-//     const restaurant = getRestaurant(id);
-    
-//     if (restaurant) {
-//         res.json(restaurant); // Send the specific restaurant as JSON
-//     } else {
-//         res.status(404).send('Restaurant not found');
-//     }
-// });
-
-// router.post('/restaurants', (req, res) => {
-//     const newRestaurant = req.body; // Assuming you send the new restaurant data in the request body
-//     createRestaurant(newRestaurant);
-//     res.status(201).send('Restaurant created');
-// });
-
-// router.delete('/restaurants/:id', (req, res) => {
-//     const id = parseInt(req.params.id);
-//     deleteRestaurant(id);
-//     res.send('Restaurant deleted');
-// });
-
-
-
 export {router as backendRouter};
