@@ -17,25 +17,27 @@ router.get('/restaurants', (req, res) => {
 
 // Create a new restaurant
 router.post('/restaurants', (req, res) => {
-    const newRestaurant = req.body; // Expecting body to have the new restaurant data
+    console.log("Router just got a POST request \n\n"); 
+    const newRestaurant = req.body; 
     const createdRestaurant = createRestaurant(newRestaurant);
-    res.status(201).json(createdRestaurant); // Respond with the created restaurant
-    console.log("Router POST request \n\n");
+    res.status(201).json(createdRestaurant); // send newly created element as response
 });
 
 
 // Delete a restaurant by ID
 
 router.delete('/restaurants/:id', (req, res) => {
+    console.log("API just received HTTP DELETE request \n\n");
     const id = parseInt(req.params.id, 10); // Extract ID from the URL and parse it
     console.log(`Received request to delete restaurant with ID: ${+id}`);
-    const deleted = deleteRestaurant(id); // Check if the restaurant was deleted
-    if (deleted) {
-        res.status(204).send(); // No content to send back after deletion
+    const deleted = deleteRestaurant(id); 
+
+    // Check if the restaurant was deleted
+    if (deleted) {                          
+        res.status(204).send();
     } else {
-        res.status(404).send('Restaurant not found'); // Return 404 if not found
+        res.status(404).send('Restaurant not found');
     }
-    console.log("Router DELETE request \n\n");
 });
 
 export {router as backendRouter};

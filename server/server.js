@@ -10,7 +10,7 @@ const { getRestaurant, createRestaurant, getRestaurants, deleteRestaurant } = re
 
 const app = express();
 
-// app.use(express.json()); // middleware for parsing JSONs
+app.use(express.json()); // middleware for parsing JSONs
 
 app.use('/api', backendRouter); // mount API router
 
@@ -51,23 +51,6 @@ app.get('/new-restaurant-form', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'new-restaurant-form.html'));
 });
 
-
-// Updating stuff experimentation
-app.post('/new-restaurant-form', (req, res) => {
-    const { name, phone, address, photo } = req.body;
-  
-    const newRestaurant = {
-      // Generate a simple unique id
-      name,
-      phone,
-      address,
-      photo
-    };
-  
-    restaurantData.push(newRestaurant);
-  
-    res.redirect('/restaurants');
-  });
 
 
 app.listen(PORT, () => {

@@ -7,15 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.restaurant-card').forEach(card => {
     const deleteBtn = card.querySelector('.delete-btn');
     deleteBtn.addEventListener('click', () => {
-      console.log('deleteBtn element clicked');
-  });
-
-    // Extract the restaurant ID from a data attribute on the card
-    const restaurantId = card.dataset.id; // Assuming you're storing the ID in a data-id attribute
-
-    deleteBtn.addEventListener('click', () => {
       console.log('DeleteBtn clicked');
-      deleteRestaurantCard(restaurantId, card); // Pass the ID and card element
+      deleteRestaurantCard(card.dataset.id, card); // Pass ID # (via data-id attribute) and card element
     });
   });
 });
@@ -26,7 +19,7 @@ async function deleteRestaurantCard(restaurantId, cardElement) {
   
   try {
       const response = await fetch(`/api/restaurants/${+restaurantId}`, {
-          method: 'DELETE',
+          method: 'DELETE', // HTTP: Delete request sent to api.js delete endpoint
       });
 
       console.log(`Response status: ${response.status}`);

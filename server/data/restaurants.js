@@ -68,15 +68,13 @@ let restaurantData = [
 
 
 const getNextId = () => {
-    let lastId = restaurantData.length;     
-    /* NOTE: I moved ^^ let statement ^^ into scope */
-    lastId += 1;
-    return lastId;
+    // We're using 0 as first ID, so length is already +1
+    return restaurantData.length;
 }
 
 // Get a list of restaurants
 const getRestaurants = () => {
-    console.log('Received a request on getrestaurants');
+    console.log('getRestaurants() returns [] from restaurants.js');
     return restaurantData;
 };
 
@@ -92,14 +90,15 @@ const getRestaurant = (id) => {
 // Create a new restaurant entry
 const createRestaurant = (newRestaurant) => {
 
-    // concoct new restaurant w/ ID using existing form info
+    // concoct new restaurant w/ ID using existing form info!
     const restaurantEntry = {
         id: getNextId(),
-        ...newRestaurant // spread
+        ...newRestaurant // spread function/operator(?)
     };
-
-    // push new entry into existing array
-    restaurantData.push(restaurantEntry); 
+    var oldLength = restaurantData.length;
+    
+    restaurantData.push(restaurantEntry); // push into restaurantData
+    return (oldLength !== restaurantData.length);
 };
 
 // Delete a restaurant by id
@@ -112,7 +111,7 @@ const deleteRestaurant = (id) => {
         if (restaurantData.length != len){
             console.log(len);
             console.log(restaurantData.length);
-            return true; // Indicate successful deletion
+            return true; // Tell callee deletion was successful
         } 
         
     }
